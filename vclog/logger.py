@@ -1,8 +1,11 @@
+from functools import wraps
+
 from .use_cases import Formatter
 from .core import Codes
 
 
 def output(function):
+    @wraps(function)
     def wrapper(*args, **kwargs):
         return_value = function(*args, **kwargs)
 
@@ -28,8 +31,8 @@ class Logger:
     
     def __init__(self, name: str) -> None:
         '''
-        Arguments
-        ---------
+        Parameters
+        ----------
         name: str
             the name of the instance
         '''
@@ -41,8 +44,8 @@ class Logger:
         '''        
         Log the given message at the info level.
         
-        Arguments
-        ---------
+        Parameters
+        ----------
         *message: Any | *tuple[Any]
             the message to log
         
@@ -63,8 +66,8 @@ class Logger:
         '''
         Log the given message at the debug level.
         
-        Arguments
-        ---------
+        Parameters
+        ----------
         *message: Any | *tuple[Any]
             the message to log
         
@@ -86,8 +89,8 @@ class Logger:
         '''
         Log the given message at the warning level.
         
-        Arguments
-        ---------
+        Parameters
+        ----------
         *message: Any | *tuple[Any]
             the message to log
         
@@ -109,8 +112,8 @@ class Logger:
         '''
         Log the given message at the error level.
         
-        Arguments
-        ---------
+        Parameters
+        ----------
         *message: Any | *tuple[Any]
             the message to log
         
