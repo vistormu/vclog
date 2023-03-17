@@ -22,7 +22,6 @@ class Logger:
     
     The Logger class has four logging levels: info, debug, warning and error.
     '''
-    name: str = ''
     info_prefix: str = Formatter.green(Formatter.bold('[INFO]'))
     debug_prefix: str = Formatter.blue(Formatter.bold('[DEBUG]'))
     warning_prefix: str = Formatter.yellow(Formatter.bold('[WARNING]'))
@@ -36,7 +35,7 @@ class Logger:
         name: str
             the name of the instance
         '''
-        __class__.name = name
+        self.name: str = name
 
     @output
     @staticmethod
@@ -56,7 +55,7 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''        
         if isinstance(message[0], Logger):
-            return __class__.info_prefix + Formatter.green(f'    [{__class__.name}] {sep.join(map(str, message[1:]))}')
+            return __class__.info_prefix + Formatter.green(f'    [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
             return __class__.info_prefix + Formatter.green(f'    {sep.join(map(str, message))}')
 
@@ -78,7 +77,7 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''        
         if isinstance(message[0], Logger):
-            return __class__.debug_prefix + Formatter.blue(f'   [{__class__.name}] {sep.join(map(str, message[1:]))}')
+            return __class__.debug_prefix + Formatter.blue(f'   [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
             return __class__.debug_prefix + Formatter.blue(f'   {sep.join(map(str, message))}')
 
@@ -101,7 +100,7 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''        
         if isinstance(message[0], Logger):
-            return __class__.warning_prefix + Formatter.yellow(f' [{__class__.name}] {sep.join(map(str, message[1:]))}')
+            return __class__.warning_prefix + Formatter.yellow(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
             return __class__.warning_prefix + Formatter.yellow(f' {sep.join(map(str, message))}')
 
@@ -124,7 +123,7 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''
         if isinstance(message[0], Logger):
-            return __class__.error_prefix + Formatter.red(f'   [{__class__.name}] {sep.join(map(str, message[1:]))}')
+            return __class__.error_prefix + Formatter.red(f'   [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
             return __class__.error_prefix + Formatter.red(f'   {sep.join(map(str, message))}')
 

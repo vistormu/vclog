@@ -1,16 +1,15 @@
 from vclog import Logger
-import time
-
 
 def main():
     # Instance logging
-    logger: Logger = Logger('pacopepekatanas')
+    logger_pepe: Logger = Logger('pacopepekatanas')
+    print(id(logger_pepe), type(id(logger_pepe)))
 
     print('%%%%%%%%%')
-    logger.info('info')
-    logger.debug('debug')
-    logger.warning('warning')
-    logger.error('error')
+    logger_pepe.info('info')
+    logger_pepe.debug('debug')
+    logger_pepe.warning('warning')
+    logger_pepe.error('error')
     print('%%%%%%%%%')
     
     # Static logging
@@ -21,20 +20,18 @@ def main():
     print('%%%%%%%%%')
     
     # Miscellaneous
-    logger: Logger = Logger('cgp')
-    logger.info('training model')
+    logger_cgp: Logger = Logger('cgp')
+    logger_cgp.info('training model')
     
-    logger: Logger = Logger('data_manager')
-    logger.info('dataset generated')
+    logger_data: Logger = Logger('data_manager')
+    logger_data.info('dataset generated')
     
-    Logger.debug('12.0876')
+    print('%%%%%%%%%')
+    logger_pepe.error('pepe')
+    logger_data.debug('data')
+    logger_cgp.warning('cgp')
     
-    before: float = time.time()
-    for i in range(100_000):
-        Logger.info(i, flush=True)
-    after: float = time.time()
-    
-    Logger.info(f'Time spent: {after-before:.2f}s')
+    Logger.debug(Logger.__qualname__)
 
 
 if __name__ == '__main__':
