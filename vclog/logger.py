@@ -19,15 +19,14 @@ def output(function):
 class Logger:
     '''
     The Logger class can be used in two ways: it can be instanced with a name or used as a static class for quick outputs.
-    
-    The Logger class has four logging levels: info, debug, warning and error.
-    '''
-    info_prefix: str = Formatter.green(Formatter.bold('[INFO]'))
-    debug_prefix: str = Formatter.blue(Formatter.bold('[DEBUG]'))
-    warning_prefix: str = Formatter.yellow(Formatter.bold('[WARNING]'))
-    error_prefix: str = Formatter.red(Formatter.bold('[ERROR]'))
 
-    
+    The Logger class has four logging levels: info, debug, warning and error. Moreover it has a plain mode that can be used to log plain text without any prefix.
+    '''
+    info_prefix: str = Formatter.green(Formatter.bold('| INFO  |'))
+    debug_prefix: str = Formatter.blue(Formatter.bold('| DEBUG |'))
+    warning_prefix: str = Formatter.yellow(Formatter.bold('|WARNING|'))
+    error_prefix: str = Formatter.red(Formatter.bold('| ERROR |'))
+
     def __init__(self, name: str) -> None:
         '''
         Parameters
@@ -39,91 +38,113 @@ class Logger:
 
     @output
     @staticmethod
-    def info(*message, sep: str = '', flush: bool = False) -> str:
-        '''        
-        Log the given message at the info level.
-        
+    def plain(*message, sep: str = '', flush: bool = False, style: list[str] = []) -> str:
+        '''
+        Log the given message without any prefix.
+
         Parameters
         ----------
         *message: Any | *tuple[Any]
             the message to log
-        
+
         sep: str, optional
             the separation of the given inputs. Default to ''
-        
+
         flush: bool, optional
             when set to True, the inputs will stay in the same line. Default to False
-        '''        
+
+        style: list[str], optional
+            the style of the message. Default to []. Possible values are: 'bold', 'dim', 'underline', 'blink', 'reverse', 'hidden' TMP
+        '''
         if isinstance(message[0], Logger):
-            return __class__.info_prefix + Formatter.green(f'    [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.info_prefix + Formatter.green(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
-            return __class__.info_prefix + Formatter.green(f'    {sep.join(map(str, message))}')
+            return __class__.info_prefix + Formatter.green(f' {sep.join(map(str, message))}')
+
+    @output
+    @staticmethod
+    def info(*message, sep: str = '', flush: bool = False) -> str:
+        '''        
+        Log the given message at the info level.
+
+        Parameters
+        ----------
+        *message: Any | *tuple[Any]
+            the message to log
+
+        sep: str, optional
+            the separation of the given inputs. Default to ''
+
+        flush: bool, optional
+            when set to True, the inputs will stay in the same line. Default to False
+        '''
+        if isinstance(message[0], Logger):
+            return __class__.info_prefix + Formatter.green(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
+        else:
+            return __class__.info_prefix + Formatter.green(f' {sep.join(map(str, message))}')
 
     @output
     @staticmethod
     def debug(*message, sep: str = '', flush: bool = False) -> str:
         '''
         Log the given message at the debug level.
-        
+
         Parameters
         ----------
         *message: Any | *tuple[Any]
             the message to log
-        
+
         sep: str, optional
             the separation of the given inputs. Default to ''
-        
+
         flush: bool, optional
             when set to True, the inputs will stay in the same line. Default to False
-        '''        
+        '''
         if isinstance(message[0], Logger):
-            return __class__.debug_prefix + Formatter.blue(f'   [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.debug_prefix + Formatter.blue(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
-            return __class__.debug_prefix + Formatter.blue(f'   {sep.join(map(str, message))}')
-
+            return __class__.debug_prefix + Formatter.blue(f' {sep.join(map(str, message))}')
 
     @output
     @staticmethod
     def warning(*message, sep: str = '', flush: bool = False) -> str:
         '''
         Log the given message at the warning level.
-        
+
         Parameters
         ----------
         *message: Any | *tuple[Any]
             the message to log
-        
+
         sep: str, optional
             the separation of the given inputs. Default to ''
-        
+
         flush: bool, optional
             when set to True, the inputs will stay in the same line. Default to False
-        '''        
+        '''
         if isinstance(message[0], Logger):
             return __class__.warning_prefix + Formatter.yellow(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
             return __class__.warning_prefix + Formatter.yellow(f' {sep.join(map(str, message))}')
-
 
     @output
     @staticmethod
     def error(*message, sep: str = '', flush: bool = False) -> str:
         '''
         Log the given message at the error level.
-        
+
         Parameters
         ----------
         *message: Any | *tuple[Any]
             the message to log
-        
+
         sep: str, optional
             the separation of the given inputs. Default to ''
-        
+
         flush: bool, optional
             when set to True, the inputs will stay in the same line. Default to False
         '''
         if isinstance(message[0], Logger):
-            return __class__.error_prefix + Formatter.red(f'   [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.error_prefix + Formatter.red(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
         else:
-            return __class__.error_prefix + Formatter.red(f'   {sep.join(map(str, message))}')
-
+            return __class__.error_prefix + Formatter.red(f' {sep.join(map(str, message))}')
