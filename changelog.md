@@ -1,4 +1,4 @@
-# 0.2.0
+# 1.0.0
 - Added a new method to the `Logger`class: now you can write to the terminal in plain mode, being able to adjust the color of the text and the background.
 - Changed the level prefix style to be more beautiful
 

@@ -22,10 +22,10 @@ class Logger:
 
     The Logger class has four logging levels: info, debug, warning and error. Moreover it has a plain mode that can be used to log plain text without any prefix.
     '''
-    info_prefix: str = Formatter.green(Formatter.bold('| INFO  |'))
-    debug_prefix: str = Formatter.blue(Formatter.bold('| DEBUG |'))
-    warning_prefix: str = Formatter.yellow(Formatter.bold('|WARNING|'))
-    error_prefix: str = Formatter.red(Formatter.bold('| ERROR |'))
+    info_prefix: str = Formatter.get('| INFO  |', color='green', bg_color=None, style='bold')
+    debug_prefix: str = Formatter.get('| DEBUG |', color='blue', bg_color=None, style='bold')
+    warning_prefix: str = Formatter.get('|WARNING|', color='yellow', bg_color=None, style='bold')
+    error_prefix: str = Formatter.get('| ERROR |', color='red', bg_color=None, style='bold')
 
     def __init__(self, name: str) -> None:
         '''
@@ -38,7 +38,7 @@ class Logger:
 
     @output
     @staticmethod
-    def plain(*message, sep: str = '', flush: bool = False, style: list[str] = []) -> str:
+    def plain(*message, color: str | None = None, bg_color: str | None = None, style: str | list[str] | None = None, sep: str = '', flush: bool = False) -> str:
         '''
         Log the given message without any prefix.
 
@@ -47,19 +47,25 @@ class Logger:
         *message: Any | *tuple[Any]
             the message to log
 
+        color: str, optional
+            the color of the message. Default to None. Possible values are: 'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'secondary_black', 'secondary_red', 'secondary_green', 'secondary_yellow', 'secondary_blue', 'secondary_magenta', 'secondary_cyan', 'secondary_white'
+
+        bg_color: str, optional
+            the background color of the message. Default to None. Possible values are: 'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'secondary_black', 'secondary_red', 'secondary_green', 'secondary_yellow', 'secondary_blue', 'secondary_magenta', 'secondary_cyan', 'secondary_white'
+
+        style: str | list[str], optional
+            the style of the message. Default to None. Possible values are: 'bold', 'dim', 'italic', 'underline', 'blink', 'highlight', 'hidden', 'strikethrough' and 'double_underline'
+
         sep: str, optional
             the separation of the given inputs. Default to ''
 
         flush: bool, optional
             when set to True, the inputs will stay in the same line. Default to False
-
-        style: list[str], optional
-            the style of the message. Default to []. Possible values are: 'bold', 'dim', 'underline', 'blink', 'reverse', 'hidden' TMP
         '''
         if isinstance(message[0], Logger):
-            return __class__.info_prefix + Formatter.green(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return Formatter.get(f'[{message[0].name}] {sep.join(map(str, message[1:]))}', color=color, bg_color=bg_color, style=style)
         else:
-            return __class__.info_prefix + Formatter.green(f' {sep.join(map(str, message))}')
+            return Formatter.get(f'{sep.join(map(str, message))}', color=color, bg_color=bg_color, style=style)
 
     @output
     @staticmethod
@@ -79,9 +85,9 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''
         if isinstance(message[0], Logger):
-            return __class__.info_prefix + Formatter.green(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.info_prefix + Formatter.get(f' [{message[0].name}] {sep.join(map(str, message[1:]))}', color='green', bg_color=None, style=None)
         else:
-            return __class__.info_prefix + Formatter.green(f' {sep.join(map(str, message))}')
+            return __class__.info_prefix + Formatter.get(f' {sep.join(map(str, message))}', color='green', bg_color=None, style=None)
 
     @output
     @staticmethod
@@ -101,9 +107,9 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''
         if isinstance(message[0], Logger):
-            return __class__.debug_prefix + Formatter.blue(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.debug_prefix + Formatter.get(f' [{message[0].name}] {sep.join(map(str, message[1:]))}', color='blue', bg_color=None, style=None)
         else:
-            return __class__.debug_prefix + Formatter.blue(f' {sep.join(map(str, message))}')
+            return __class__.debug_prefix + Formatter.get(f' {sep.join(map(str, message))}', color='blue', bg_color=None, style=None)
 
     @output
     @staticmethod
@@ -123,9 +129,9 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''
         if isinstance(message[0], Logger):
-            return __class__.warning_prefix + Formatter.yellow(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.warning_prefix + Formatter.get(f' [{message[0].name}] {sep.join(map(str, message[1:]))}', color='yellow', bg_color=None, style=None)
         else:
-            return __class__.warning_prefix + Formatter.yellow(f' {sep.join(map(str, message))}')
+            return __class__.warning_prefix + Formatter.get(f' {sep.join(map(str, message))}', color='yellow', bg_color=None, style=None)
 
     @output
     @staticmethod
@@ -145,6 +151,6 @@ class Logger:
             when set to True, the inputs will stay in the same line. Default to False
         '''
         if isinstance(message[0], Logger):
-            return __class__.error_prefix + Formatter.red(f' [{message[0].name}] {sep.join(map(str, message[1:]))}')
+            return __class__.error_prefix + Formatter.get(f' [{message[0].name}] {sep.join(map(str, message[1:]))}', color='red', bg_color=None, style=None)
         else:
-            return __class__.error_prefix + Formatter.red(f' {sep.join(map(str, message))}')
+            return __class__.error_prefix + Formatter.get(f' {sep.join(map(str, message))}', color='red', bg_color=None, style=None)
