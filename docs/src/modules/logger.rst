@@ -1,2 +1,2 @@
-.. automodule:: vclog.logger
+.. automodule:: logger
    :members:

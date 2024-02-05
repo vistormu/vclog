@@ -1,11 +1,14 @@
+import time
 from vclog import Logger
 
 
 def main():
-    # Instance logging
-    logger_pepe: Logger = Logger('pacopepekatanas')
+    before = time.time()
 
-    Logger.plain('%%%%%%%%%')
+    # Instance logging
+    logger_pepe = Logger('pacopepekatanas')
+
+    Logger.plain("\nPrinting with instanced logger")
     logger_pepe.info('info')
     logger_pepe.debug('debug')
     logger_pepe.warning('warning')
@@ -13,6 +16,7 @@ def main():
     Logger.plain('%%%%%%%%%')
 
     # Static logging
+    Logger.plain("\nPrinting with static logger")
     Logger.info('info')
     Logger.debug('debug')
     Logger.warning('warning')
@@ -134,6 +138,15 @@ def main():
     Logger.plain('%%%%%%%%%')
 
     Logger.plain('green', color='green', style=['bold', 'underline', 'blink', 'italic', 'strikethrough', 'double_underline'])
+
+    after = time.time()
+
+    print(f'Elapsed time: {(after - before)*1000:.2f} ms')
+
+    flush_logger = Logger('flush')
+    for i in range(100):
+        flush_logger.error(f"flushing: {i}%", flush=True)
+        time.sleep(0.1)
 
 
 if __name__ == '__main__':
