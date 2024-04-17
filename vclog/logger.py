@@ -108,6 +108,9 @@ def _logger_print(*messages,
     result: str = ""
 
     if isinstance(messages[0], Logger):
+        if messages[0].disable:
+            return
+
         result += f"[{messages[0].name}] "
         messages = messages[1:]
 
@@ -153,7 +156,7 @@ class Logger:
     - `error`: prints a message to the error level.
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, disable: bool = False) -> None:
         """
         Initialize the logger with a name.
 
@@ -161,8 +164,11 @@ class Logger:
         ---------
         name : str
             The name of the logger.
+        disable : bool, optional
+            Wether to disable the logger or not.
         """
         self.name: str = name
+        self.disable: bool = disable
 
     @ContextAware
     @staticmethod

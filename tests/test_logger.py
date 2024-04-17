@@ -148,6 +148,9 @@ def main():
         flush_logger.error(f"flushing: {i}%", flush=True)
         time.sleep(0.1)
 
+    disabled_logger = Logger('disabled', disable=True)
+    disabled_logger.error('this should not be printed')
+
 
 if __name__ == '__main__':
     main()
