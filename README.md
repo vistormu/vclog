@@ -30,6 +30,12 @@ It also has a `plain` method in which color, background color, and style can be 
 Logger.plain("plain text with format", color="blue", bg_color="green", style="bold")
 ```
 
+The logger can also be disabled by setting the `disable` attribute to `True`. This only works for the instantiated logger.
+```python
+logger = Logger("instance", disable=True)
+logger.info("this message will not be displayed")
+```
+
 The package also offers a `format` method to get the formatted string directly.
 ```python
 from vclog import format
